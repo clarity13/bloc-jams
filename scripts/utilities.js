@@ -3,3 +3,5 @@ function forEach(array, callback) {
     callback(array[i]);
   }
 }
+
+//checkpoint 22
