@@ -30,6 +30,22 @@
      ]
  };
 
+ // Another Example Album
+ var albumJon = {
+     title: 'All Of You',
+     artist: 'Jon Sang',
+     label: 'JS',
+     year: '2017',
+     albumArtUrl: 'assets/images/album_covers/20.png',
+     songs: [
+         { title: 'Thats funny', duration: '2:30' },
+         { title: 'Do me wrong', duration: '3:20' },
+         { title: 'What is this', duration: '4:00'},
+         { title: 'Singing all out', duration: '3:50' },
+         { title: 'Stop', duration: '2:50'}
+     ]
+ };
+
  var createSongRow = function(songNumber, songName, songLength) {
      var template =
         '<tr class="album-view-song-item">'
@@ -64,7 +80,17 @@
          albumSongList.innerHTML += createSongRow(i + 1, album.songs[i].title, album.songs[i].duration);
      }
  };
-
+ index = 1;
  window.onload = function() {
      setCurrentAlbum(albumPicasso);
+
+     var albums = [albumPicasso, albumMarconi, albumJon];
+
+     albumImage.window.addEventListener('click', function(event) {
+       setCurrentAlbum(album[index]);
+       index++;
+       if(index == album.length) {
+         index = 0;
+       }
+     });
  };
