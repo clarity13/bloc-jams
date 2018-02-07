@@ -124,7 +124,6 @@
     var currentSongIndex = trackIndex(currentAlbum, currentSongFromAlbum);
     // Note that we're _incrementing_ the song here
     currentSongIndex++;
-    currentSoundFile.play();
 
     if (currentSongIndex >= currentAlbum.songs.length) {
         currentSongIndex = 0;
@@ -135,6 +134,7 @@
 
     // Set a new current song
     currentlyPlayingSongNumber = currentSongIndex + 1;
+    currentSoundFile.play();
     currentSongFromAlbum = currentAlbum.songs[currentSongIndex];
 
     // Update the Player Bar information
@@ -151,7 +151,6 @@ var previousSong = function() {
     var currentSongIndex = trackIndex(currentAlbum, currentSongFromAlbum);
     // Note that we're _decrementing_ the index here
     currentSongIndex--;
-    currentSoundFile.play();
 
     if (currentSongIndex < 0) {
         currentSongIndex = currentAlbum.songs.length - 1;
@@ -162,6 +161,7 @@ var previousSong = function() {
 
     // Set a new current song
     currentlyPlayingSongNumber = currentSongIndex + 1;
+    currentSoundFile.play();
     currentSongFromAlbum = currentAlbum.songs[currentSongIndex];
 
     // Update the Player Bar information
