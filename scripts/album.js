@@ -185,7 +185,31 @@ var previousSong = function() {
     $('.main-controls .play-pause').html(playerBarPauseButton);
 
 };
-
+ // create a variable called togglePlayFromPlayerBar that is a function that doesn't take any parameters
+ var togglePlayFromPlayerBar = function() {
+    // create a variable called $currentlyPlayingCell that grabs the song number cell of the currently playing song number
+    var $currentlyPlayingCell = getSongNumberCell(currentlyPlayingSongNmber);
+   // if the current sound file is paused
+    if (currentSoundFile.isPaused()) {
+        // change the html of the currently playing cell with the pause button template
+        $currentlyPlayingCell.html(pauseButtonTemplate);
+        // also change the html of the player bar pause button
+        $('.main-controls .play-pause').html(playerBarPauseButton);
+        // play the current sound file
+        currentSoundFile.play();
+      // else
+    } else {
+        // change the html of the currently playing cell with the play button template
+        $currentlyPlayingCell.html(playButtonTemplate);
+        // also change the html of the player bar so it displays the player bar play button
+        $('.main-controls .play-pause').html(playerBarPlayButton);
+        // pause the current sound file
+        currentSoundFile.pause();
+    }
+   // end conditional
+  // end $currentlyPlayingCell
+// end togglePlayFromPlayerBar
+};
  // Album button templates
  var playButtonTemplate = '<a class="album-song-button"><span class="ion-play"></span></a>';
  var pauseButtonTemplate = '<a class="album-song-button"><span class="ion-pause"></span></a>';
