@@ -138,6 +138,7 @@
 
     // Update the Player Bar information
     updatePlayerBarSong();
+    setSong(currentlyPlayingSongNumber);
     currentSoundFile.play();
 
     var $nextSongNumberCell = getSongNumberCell(currentlyPlayingSongNumber);
@@ -161,11 +162,12 @@ var previousSong = function() {
 
     // Set a new current song
     currentlyPlayingSongNumber = currentSongIndex + 1;
-    currentSoundFile.play();
     currentSongFromAlbum = currentAlbum.songs[currentSongIndex];
 
     // Update the Player Bar information
     updatePlayerBarSong();
+    setSong(currentlyPlayingSongNumber);
+    currentSoundFile.play();
 
     $('.main-controls .play-pause').html(playerBarPauseButton);
 
