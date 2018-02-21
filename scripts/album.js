@@ -55,7 +55,7 @@
             updateSeekPercentage();
             $(this).html(pauseButtonTemplate);
             currentSongFromAlbum = currentAlbum.songs[songNumber - 1];
-            
+
             var $volumeFill = $('.volume .fill');
             var $volumeThumb = $('.volume .thumb');
             $volumeFill.width(currentVolume + '%');
@@ -276,10 +276,42 @@ var previousSong = function() {
         // pause the current sound file
         currentSoundFile.pause();
     }
-   // end conditional
-  // end $currentlyPlayingCell
-// end togglePlayFromPlayerBar
 };
+
+// declare a function expression called filterTimeCode that takes in timeInSeconds as a parameter
+var filterTimeCode = function(timeInSeconds) {
+  //set time in seconds to equal the parsed float of timeInSeconds
+  parseFloat(timeInSeconds);
+  // declare a variable called seconds that concatinates a "0" to the result of remainder of timeInSeconds and 60 run through Math.floor to return the highest integer
+  var seconds = Math.floor(timeInSeconds % 3600 % 60);
+  // declare a variable called minutes that divides timeInSeconds by 60 and runs it through Math.floor to return the highest integer
+  var minutes = Math.floor(timeInSeconds % 3600 / 60);
+  // Remove the 0 in front of seconds with more than 2 characters, e.g. 010 but not 09
+  var formattedSeconds = ("00" + seconds).slice(-2);
+  // return the concatination of minutes, a colon, and the value of last two elements in seconds (look up slice() method)
+  return minutes + ":" + formattedSeconds;
+};
+ // end function
+
+ 
+ // To do:
+ // 1. change "+ <td class="song-item-duration">' + songLength + '</td>'"" in createSongRow to use the filterTimeCode function and display the result of running songLength through the function
+ // 2. update updateSeekBarWhileSongPlays function so that setCurrentTimeInPlayerBar shows the current time run through the filterTimeCode function (you will need to use getTime())
+
+ // declare a function called setCurrentTimeInPlayerBar that accepts currentTime as a parameter
+ var setCurrentTimeInPlayerBar = function(currentTime) {
+   // use jquery to select the .current-time class and change the text inside of that to currentTime
+   $(".current-time").text(currentTime)
+ };
+ // end function
+
+  // declare a function called setTotalTimeInPlayerBar that accepts totalTime as a parameter
+ var setTotalTimeInPlayerBar = function(totalTime) {
+   // use jquery to select the .total-time class and change the text inside of that to totalTime
+   $(".total-time").text(totalTime);
+ } ;
+ // end function
+
  // Album button templates
  var playButtonTemplate = '<a class="album-song-button"><span class="ion-play"></span></a>';
  var pauseButtonTemplate = '<a class="album-song-button"><span class="ion-pause"></span></a>';
