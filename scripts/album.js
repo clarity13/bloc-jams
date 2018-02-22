@@ -31,7 +31,7 @@
         '<tr class="album-view-song-item">'
       + '  <td class="song-item-number" data-song-number="' + songNumber + '">' + songNumber + '</td>'
       + '  <td class="song-item-title">' + songName + '</td>'
-      + '  <td class="song-item-duration">' + songLength + '</td>'
+      + '  <td class="song-item-duration">' + filterTimeCode() + '</td>'
       + '</tr>'
       ;
       var getSongNumberCell = function(number) {
@@ -133,6 +133,7 @@
              // #11
              var seekBarFillRatio = this.getTime() / this.getDuration();
              var $seekBar = $('.seek-control .seek-bar');
+             setCurrentTimeInPlayerBar(currentTime);
 
              updateSeekPercentage($seekBar, seekBarFillRatio);
          });
@@ -253,6 +254,7 @@ var previousSong = function() {
     $('.currently-playing .artist-name').text(currentAlbum.artist);
     $('.currently-playing .artist-song-mobile').text(currentSongFromAlbum.title + " - " + currentAlbum.artist);
     $('.main-controls .play-pause').html(playerBarPauseButton);
+    setTotalTimeInPlayerBar(totalTime);
 
 };
  // create a variable called togglePlayFromPlayerBar that is a function that doesn't take any parameters
@@ -287,13 +289,13 @@ var filterTimeCode = function(timeInSeconds) {
   // declare a variable called minutes that divides timeInSeconds by 60 and runs it through Math.floor to return the highest integer
   var minutes = Math.floor(timeInSeconds % 3600 / 60);
   // Remove the 0 in front of seconds with more than 2 characters, e.g. 010 but not 09
-  var formattedSeconds = ("00" + seconds).slice(-2);
+  var formattedSeconds = seconds.substr(0, 2);
   // return the concatination of minutes, a colon, and the value of last two elements in seconds (look up slice() method)
   return minutes + ":" + formattedSeconds;
 };
  // end function
 
- 
+
  // To do:
  // 1. change "+ <td class="song-item-duration">' + songLength + '</td>'"" in createSongRow to use the filterTimeCode function and display the result of running songLength through the function
  // 2. update updateSeekBarWhileSongPlays function so that setCurrentTimeInPlayerBar shows the current time run through the filterTimeCode function (you will need to use getTime())
@@ -301,7 +303,7 @@ var filterTimeCode = function(timeInSeconds) {
  // declare a function called setCurrentTimeInPlayerBar that accepts currentTime as a parameter
  var setCurrentTimeInPlayerBar = function(currentTime) {
    // use jquery to select the .current-time class and change the text inside of that to currentTime
-   $(".current-time").text(currentTime)
+   $(".current-time").text(currentTime);
  };
  // end function
 
