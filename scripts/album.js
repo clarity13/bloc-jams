@@ -133,7 +133,7 @@
              // #11
              var seekBarFillRatio = this.getTime() / this.getDuration();
              var $seekBar = $('.seek-control .seek-bar');
-             setCurrentTimeInPlayerBar(currentTime);
+             setCurrentTimeInPlayerBar(this.getTime);
 
              updateSeekPercentage($seekBar, seekBarFillRatio);
          });
