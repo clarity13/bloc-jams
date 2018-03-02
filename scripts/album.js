@@ -50,11 +50,12 @@
        }
        if (currentlyPlayingSongNumber !== songNumber) {
             // Switch from Play -> Pause button to indicate new song is playing.
+            $(this).html(pauseButtonTemplate);
             setSong(songNumber);
             currentSoundFile.play();
-            updateSeekPercentage();
-            $(this).html(pauseButtonTemplate);
-            currentSongFromAlbum = currentAlbum.songs[songNumber - 1];
+            updateSeekBarWhileSongPlays();
+            //updateSeekPercentage();
+            //currentSongFromAlbum = currentAlbum.songs[songNumber - 1];
 
             var $volumeFill = $('.volume .fill');
             var $volumeThumb = $('.volume .thumb');
@@ -133,14 +134,16 @@
              // #11
              var seekBarFillRatio = this.getTime() / this.getDuration();
              var $seekBar = $('.seek-control .seek-bar');
-             setCurrentTimeInPlayerBar(this.getTime);
-
+             setCurrentTimeInPlayerBar(this.getTime());
+             console.log($seekBar);
              updateSeekPercentage($seekBar, seekBarFillRatio);
+
          });
      }
  };
 
  var updateSeekPercentage = function($seekBar, seekBarFillRatio) {
+    console.log("inside updateSeekPercentage" + $seekBar);
     var offsetXPercent = seekBarFillRatio * 100;
     // #1
     offsetXPercent = Math.max(0, offsetXPercent);
@@ -254,7 +257,7 @@ var previousSong = function() {
     $('.currently-playing .artist-name').text(currentAlbum.artist);
     $('.currently-playing .artist-song-mobile').text(currentSongFromAlbum.title + " - " + currentAlbum.artist);
     $('.main-controls .play-pause').html(playerBarPauseButton);
-    setTotalTimeInPlayerBar(totalTime);
+    //setTotalTimeInPlayerBar(totalTime);
 
 };
  // create a variable called togglePlayFromPlayerBar that is a function that doesn't take any parameters
@@ -262,7 +265,7 @@ var previousSong = function() {
     // create a variable called $currentlyPlayingCell that grabs the song number cell of the currently playing song number
     var $currentlyPlayingCell = getSongNumberCell(currentlyPlayingSongNumber);
    // if the current sound file is paused
-    if (currentSoundFile.isPaused()) {
+    if (currentSoundFile != null && currentSoundFile.isPaused()) {
         // change the html of the currently playing cell with the pause button template
         $currentlyPlayingCell.html(pauseButtonTemplate);
         // also change the html of the player bar pause button
@@ -289,7 +292,7 @@ var filterTimeCode = function(timeInSeconds) {
   // declare a variable called minutes that divides timeInSeconds by 60 and runs it through Math.floor to return the highest integer
   var minutes = Math.floor(timeInSeconds % 3600 / 60);
   // Remove the 0 in front of seconds with more than 2 characters, e.g. 010 but not 09
-  var formattedSeconds = seconds.substr(0, 2);
+  var formattedSeconds = seconds.toString().substr(0, 2);
   // return the concatination of minutes, a colon, and the value of last two elements in seconds (look up slice() method)
   return minutes + ":" + formattedSeconds;
 };
