@@ -279,7 +279,9 @@ var previousSong = function() {
         // also change the html of the player bar so it displays the player bar play button
         $(this).html(playerBarPlayButton);
         // pause the current sound file
+        if (currentSoundFile !== null) {
         currentSoundFile.pause();
+        }
     }
 };
 
@@ -340,6 +342,7 @@ var filterTimeCode = function(timeInSeconds) {
  $(document).ready(function() {
      setCurrentAlbum(albumPicasso);
      setupSeekBars();
+     setSong('1');
      $previousButton.click(previousSong);
      $nextButton.click(nextSong);
      mainControlsPlayPause.click(togglePlayFromPlayerBar);
