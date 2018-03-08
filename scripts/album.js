@@ -31,7 +31,7 @@
         '<tr class="album-view-song-item">'
       + '  <td class="song-item-number" data-song-number="' + songNumber + '">' + songNumber + '</td>'
       + '  <td class="song-item-title">' + songName + '</td>'
-      + '  <td class="song-item-duration">' + filterTimeCode() + '</td>'
+      + '  <td class="song-item-duration">' + filterTimeCode(songLength) + '</td>'
       + '</tr>'
       ;
       var getSongNumberCell = function(number) {
@@ -137,6 +137,7 @@
              setCurrentTimeInPlayerBar(this.getTime());
              console.log($seekBar);
              updateSeekPercentage($seekBar, seekBarFillRatio);
+             setCurrentTimeInPlayerBar(filterTimeCode(this.getTime()));
 
          });
      }
@@ -257,7 +258,7 @@ var previousSong = function() {
     $('.currently-playing .artist-name').text(currentAlbum.artist);
     $('.currently-playing .artist-song-mobile').text(currentSongFromAlbum.title + " - " + currentAlbum.artist);
     $('.main-controls .play-pause').html(playerBarPauseButton);
-    //setTotalTimeInPlayerBar(totalTime);
+    setTotalTimeInPlayerBar(filterTimeCode(currentSongFromAlbum.duration));
 
 };
  // create a variable called togglePlayFromPlayerBar that is a function that doesn't take any parameters
@@ -288,15 +289,14 @@ var previousSong = function() {
 // declare a function expression called filterTimeCode that takes in timeInSeconds as a parameter
 var filterTimeCode = function(timeInSeconds) {
   //set time in seconds to equal the parsed float of timeInSeconds
-  parseFloat(timeInSeconds);
+  timeInSeconds = parseFloat(timeInSeconds);
   // declare a variable called seconds that concatinates a "0" to the result of remainder of timeInSeconds and 60 run through Math.floor to return the highest integer
-  var seconds = Math.floor(timeInSeconds % 3600 % 60);
+  var seconds = '0' + Math.floor(timeInSeconds % 60);
   // declare a variable called minutes that divides timeInSeconds by 60 and runs it through Math.floor to return the highest integer
-  var minutes = Math.floor(timeInSeconds % 3600 / 60);
+  var minutes = Math.floor(timeInSeconds / 60);
   // Remove the 0 in front of seconds with more than 2 characters, e.g. 010 but not 09
-  var formattedSeconds = seconds.toString().substr(0, 2);
   // return the concatination of minutes, a colon, and the value of last two elements in seconds (look up slice() method)
-  return minutes + ":" + formattedSeconds;
+  return minutes + ":" + seconds.slice(-2);
 };
  // end function
 
